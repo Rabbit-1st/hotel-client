@@ -8,11 +8,11 @@ export interface order {
     roomName: string
     status: number
     statusText: string
-    bedType:number
-    bedTypeText:string
-    policy:number
-    policyText:string
-    totalPrice:number
+    bedType: number
+    bedTypeText: string
+    policy: number
+    policyText: string
+    totalPrice: number
     createDate: Date
     createDateText: string
     checkInDate: Date
@@ -35,7 +35,7 @@ export interface orderListForm {
     prop: string
     status: number
     phone: string
-    userId:string
+    userId: string
 }
 
 export interface orderUpdateForm {
@@ -50,6 +50,7 @@ export interface orderAddForm {
     status: number
     checkInDate: number
     checkOutDate: number
+    totalPrice: number
 }
 
 
@@ -67,7 +68,7 @@ export interface orderAddResponseData {
 }
 
 //接口
-export const orderListAPI = ({ current, size, order, prop, status, phone,userId }: orderListForm) => {
+export const orderListAPI = ({ current, size, order, prop, status, phone, userId }: orderListForm) => {
     return request<any, result<orderListResponseData>>({
         url: '/order/listByUser',
         method: 'get',
@@ -94,12 +95,12 @@ export const orderUpdateAPI = ({ orderId, status }: orderUpdateForm) => {
     })
 }
 
-export const orderAddAPI = ({ userId: string, roomType, status, checkInDate, checkOutDate }: orderAddForm) => {
+export const orderAddAPI = ({ userId: string, roomType, status, checkInDate, checkOutDate, totalPrice }: orderAddForm) => {
     return request<any, result<orderAddResponseData>>({
         url: '/order/add',
         method: 'post',
         data: {
-            userId: string, roomType, status, checkInDate, checkOutDate
+            userId: string, roomType, status, checkInDate, checkOutDate, totalPrice
         }
     })
 }

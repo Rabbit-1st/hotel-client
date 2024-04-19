@@ -135,7 +135,7 @@ const form = ref({
   lastname: '',
   firstname: '',
   phone: '',
-
+  total:0
 })
 
 const submitForm = async () => {
@@ -153,10 +153,13 @@ const submitForm = async () => {
 
   const checkInDate = new Date(form.value.timeZone[0]).getTime()
   const checkOutDate = new Date(form.value.timeZone[1]).getTime()
+  const totalPrice = roomInfo.value.price * total.value
+console.log(totalPrice);
 
 
+  const res = await orderAddAPI({ userId, roomType, status, checkInDate, checkOutDate,totalPrice })
 
-  const res = await orderAddAPI({ userId, roomType, status, checkInDate, checkOutDate })
+
   if (res.code == 200) {
     ElMessage.success({
       message: res.msg

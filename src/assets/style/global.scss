@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 1px;
+}
+
+*::-webkit-scrollbar-thumb {
+    border-radius: 0.5rem;
+    background-color: rgba(144, 147, 153, 0.3);
+}
+
+html,
+body,
+#app {
+    height: 100%;
+}
+
+body {
+    overflow: overlay;
+    font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+        'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+    background-color: #eee;
+}
+
+
+
+
+ul {
+
+    list-style: none
+}
+
+.el-anchor__link {
+    color: #fff !important;
+    width: 120px;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px !important;
+}
+
+
+

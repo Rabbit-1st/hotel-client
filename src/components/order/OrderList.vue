@@ -1,6 +1,6 @@
 <template>
     <div class="wrap">
-
+        <el-button @click="back">返回</el-button>
         <div v-if="orderList.length > 0">
 
             <div class="row title">
@@ -35,7 +35,10 @@
                         <p>{{ item.lastname + item.firstname }}</p>
                         <p>{{ item.checkInDateText }}</p>
                         <p class="price">￥{{ item.totalPrice }}</p>
-                        <p>{{ item.policyText }}</p>
+                        <p v-if="item.status!==3" @click="item.policy === 0 ? cancel(item.orderId) : ''"
+                            :class="item.policy === 0 ? 'cancel' : ''">{{
+                                item.policyText }}</p>
+                                <P v-if="item.status===3">已退订</P>
                     </div>
                     <div class="right">
                         <p>{{ item.statusText }}</p>
@@ -59,10 +62,11 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
 
-import { order, orderListAPI, orderListForm } from '@/apis/order'
+import { order, orderListAPI, orderListForm, orderUpdateAPI } from '@/apis/order'
 import { ElMessage } from 'element-plus'
 import days from 'dayjs'
 import { useUserStore } from '@/stores/user'
+import router from '@/routers'
 const userStore = useUserStore()
 
 interface addTotal {
@@ -94,7 +98,7 @@ const getListData = async () => {
     if (res.code == 200) {
         let list: order[] = res.data.records
         orderList.value = check(list)
-        console.log(orderList.value);
+ 
 
     } else {
         ElMessage.warning({
@@ -163,6 +167,23 @@ const check = (list: order[]) => {
 
 
 
+const cancel = async (orderId: string) => {
+    const status = 3
+    const res = await orderUpdateAPI({ orderId, status })
+    if(res.code === 200){
+        ElMessage.success({
+            message: '取消订单成功'
+        })
+
+        getListData()
+    }
+
+}
+
+
+
+
+
 
 //翻页
 const pageChangeHandle = (current: number) => {
@@ -175,7 +196,10 @@ onMounted(() => {
     getListData()
 })
 
-
+//返回
+const back = () => {
+    router.go(-1)
+}
 
 
 </script>
@@ -185,7 +209,11 @@ onMounted(() => {
     background-color: #fff;
     width: 1024px;
     margin: 20px auto;
-    padding: 64px 0;
+
+    button {
+        margin: 24px 0 0 40px;
+        font-size: 12px;
+    }
 
     .controller {
         height: 50px;
@@ -213,9 +241,11 @@ onMounted(() => {
         border: 1px solid #daf3ff;
         margin: 0 auto 10px;
         border-radius: 4px;
-        &:hover{
+
+        &:hover {
             border: 1px solid #c2ecff;
         }
+
         .orderNumber {
             background-color: #d1f1ff;
             font-size: 12px;
@@ -248,9 +278,14 @@ onMounted(() => {
                 .price {
                     color: #ff704a;
                 }
+
+                .cancel {
+                    cursor: pointer;
+                    text-decoration: underline;
+                }
             }
 
-            .line{
+            .line {
                 border-right: 1px solid #daf3ff;
             }
 
@@ -266,7 +301,8 @@ onMounted(() => {
     .title {
         border: 0;
         height: 30px;
-        &:hover{
+
+        &:hover {
             border: 0;
         }
     }

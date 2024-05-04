@@ -40,7 +40,7 @@ export interface orderListForm {
 
 export interface orderUpdateForm {
     orderId: string
-    status: string
+    status: number
 
 }
 

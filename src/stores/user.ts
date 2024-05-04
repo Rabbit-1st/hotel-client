@@ -49,7 +49,7 @@ export const useUserStore = defineStore('user', () => {
         ElMessage.success({
             message: '登出成功'
         })
-        // router.push('/login')
+        router.push('/login')
     }
 
     return {

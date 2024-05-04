@@ -7,27 +7,35 @@
             <el-form class="screen" :model="page" label-width="auto" style="max-width: 600px">
                 <el-form-item label="床型">
                     <el-radio-group v-model="page.bedType" @change="handleSelect">
+                        <el-radio :value="-1">全部</el-radio>
                         <el-radio :value="0">大床</el-radio>
                         <el-radio :value="1">双人床</el-radio>
                         <el-radio :value="2">单人床</el-radio>
+                        
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="餐食">
                     <el-radio-group v-model="page.breakfast" @change="handleSelect">
+                        <el-radio :value="-1">全部</el-radio>
                         <el-radio :value="0">无</el-radio>
                         <el-radio :value="1">有</el-radio>
+                        
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="政策">
                     <el-radio-group v-model="page.policy" @change="handleSelect">
+                        <el-radio :value="-1">全部</el-radio>
                         <el-radio :value="0">免费退订</el-radio>
                         <el-radio :value="1">不可退订</el-radio>
+                        
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="WiFi">
                     <el-radio-group v-model="page.wifi" @change="handleSelect">
+                        <el-radio :value="-1">全部</el-radio>
                         <el-radio :value="0">无</el-radio>
                         <el-radio :value="1">有</el-radio>
+                        
                     </el-radio-group>
                 </el-form-item>
             </el-form>
@@ -36,9 +44,9 @@
         <el-table :data="roomList" style="width: 100%" @sort-change="changeHandle">
             <el-table-column prop="image" label="房型">
                 <template #default="scope">
-                    <el-image v-if="scope.row.images[0]" style="width: 100px; height: 70px" :src="scope.row.images[0].url" fit="contain" 
-                    :preview-src-list="scope.row.images.map((item:image)=>item.url)" hide-on-click-modal :z-index="100"
-                    />
+                    <el-image v-if="scope.row.images[0]" style="width: 100px; height: 70px" :src="scope.row.images[0].url"
+                        fit="contain" :preview-src-list="scope.row.images.map((item: image) => item.url)" hide-on-click-modal
+                        :z-index="100" />
                 </template>
             </el-table-column>
             <el-table-column prop="bedTypeText" label="床型" />
